@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KodYo'l — Dasturlashni noldan o'rganing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f8fc;--surf:#fff;--ink:#0f172a;--mut:#51607a;--line:#dde3ef;--pri:#2b50f5;--pri-ink:#fff;--sun:#ffc531;--code:#0f1830;--codeink:#e6ecff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1020;--surf:#131a31;--ink:#eef2ff;--mut:#a3b0cf;--line:#26304f;--pri:#6f8bff;--pri-ink:#0b1020;--code:#070b17;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1020;--surf:#131a31;--ink:#eef2ff;--mut:#a3b0cf;--line:#26304f;--pri:#6f8bff;--pri-ink:#0b1020;--code:#070b17;color-scheme:dark}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Inter,system-ui,sans-serif;line-height:1.1;margin:0;letter-spacing:-.02em}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:18px;height:60px}
+.logo{font:800 22px "Bricolage Grotesque",sans-serif;text-decoration:none;margin-right:auto}
+.logo b{color:var(--pri)}
+nav a.l{font-size:15px;text-decoration:none;color:var(--mut)}
+nav a.l:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--pri);color:var(--pri-ink);padding:12px 22px;border-radius:10px;font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:16px;font-family:inherit}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sun{background:var(--sun);color:#1a1400}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.ico{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:17px}
+@media(max-width:760px){nav a.l{display:none}}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:64px 0 56px}
+@media(max-width:880px){.hero{grid-template-columns:1fr;padding-top:36px}}
+.hero h1{font-size:clamp(38px,6vw,66px);font-weight:800}
+.hero p{color:var(--mut);font-size:19px;max-width:520px;margin:20px 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap}
+.stats div{font-size:14px;color:var(--mut)}
+.stats b{display:block;font:800 26px "Bricolage Grotesque",sans-serif;color:var(--ink)}
+.term{background:var(--code);border-radius:14px;overflow:hidden;box-shadow:0 20px 50px -20px rgba(20,40,120,.45);border:1px solid var(--line)}
+.tabs{display:flex;gap:2px;padding:8px 8px 0;overflow-x:auto;background:rgba(255,255,255,.04)}
+.tabs button{background:none;border:0;color:#8fa0cc;padding:9px 14px;font:500 13px "JetBrains Mono",monospace;cursor:pointer;border-radius:8px 8px 0 0;white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--code);color:var(--sun)}
+pre{margin:0;padding:20px;color:var(--codeink);font:400 14.5px/1.7 "JetBrains Mono",ui-monospace,monospace;overflow-x:auto;min-height:150px}
+.out{border-top:1px solid #243158;padding:12px 20px;font:400 14px "JetBrains Mono",monospace;color:#8ff0b5;min-height:48px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.out button{background:var(--sun);border:0;border-radius:7px;padding:6px 14px;font-weight:600;cursor:pointer;color:#1a1400}
+section{padding:64px 0}
+.head{max-width:640px;margin-bottom:32px}
+.head h2{font-size:clamp(30px,4.2vw,44px);font-weight:800}
+.head p{color:var(--mut);margin:12px 0 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{border:1px solid var(--line);background:var(--surf);color:var(--ink);padding:8px 16px;border-radius:99px;cursor:pointer;font:500 14px Inter,sans-serif}
+.filters button[aria-pressed=true]{background:var(--pri);color:var(--pri-ink);border-color:var(--pri)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.lang{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:20px}
+.lang .tag{display:inline-block;font:500 13px "JetBrains Mono",monospace;background:var(--bg);border:1px solid var(--line);padding:3px 10px;border-radius:6px;margin-bottom:12px}
+.lang h3{font-size:22px;margin-bottom:6px}
+.lang p{margin:0;color:var(--mut);font-size:15px;line-height:1.55}
+.lang small{display:block;margin-top:12px;color:var(--pri);font-weight:600;font-size:13px}
+.path{counter-reset:s;display:grid;gap:0;max-width:820px}
+.step{display:grid;grid-template-columns:48px 1fr;gap:18px;position:relative;padding-bottom:30px}
+.step:before{counter-increment:s;content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center;font:700 17px "Bricolage Grotesque",sans-serif;z-index:1}
+.step:after{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--line)}
+.step:last-child:after{display:none}
+.step h3{font-size:22px;margin-bottom:4px}
+.step p{margin:0;color:var(--mut)}
+.step ul{margin:8px 0 0;padding-left:18px;color:var(--mut);font-size:15px}
+.band{background:var(--surf);border-block:1px solid var(--line)}
+.lesson{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:880px){.lesson{grid-template-columns:1fr}}
+.lesson h3{font-size:26px;margin:0 0 10px}
+.lesson p{color:var(--mut)}
+.task{border-left:4px solid var(--sun);padding:6px 16px;background:var(--bg);border-radius:0 8px 8px 0;margin-top:16px;font-size:15px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.feat{border-top:3px solid var(--pri);padding-top:14px}
+.feat h3{font-size:20px;margin-bottom:6px}
+.feat p{margin:0;color:var(--mut);font-size:15px}
+.join{background:var(--pri);color:var(--pri-ink);border-radius:22px;padding:48px 36px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center}
+@media(max-width:820px){.join{grid-template-columns:1fr;padding:32px 22px}}
+.join h2{font-size:clamp(28px,4vw,42px);font-weight:800}
+.join p{margin:12px 0 0;opacity:.92}
+.join ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15.5px}
+.join li:before{content:"✓ ";font-weight:700}
+.join .btn{margin-top:20px}
+details{border-bottom:1px solid var(--line);padding:16px 0;max-width:780px}
+summary{cursor:pointer;font:700 19px "Bricolage Grotesque",sans-serif}
+details p{color:var(--mut);margin:10px 0 0}
+footer{padding:36px 0 48px;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+<a class="logo" href="#top">Kod<b>Yo'l</b></a>
+<a class="l" href="#tillar">Tillar</a><a class="l" href="#yoq">Yo'l xaritasi</a><a class="l" href="#dars">Namuna dars</a><a class="l" href="#savol">Savollar</a>
+<button class="ico" id="theme" aria-label="Mavzuni almashtirish">◐</button>
+<a class="btn tg" href="#">Darslarga kirish</a>
+</nav></div></header>
+
+<main id="top">
+<div class="wrap hero">
+<div>
+<h1>Dasturlashni noldan boshlang. Birinchi ishingizgacha.</h1>
+<p>Kompyuterni yoqa olsangiz bas. Har bir til uchun tushunarli o'zbekcha darslar, amaliy topshiriqlar va real loyihalar — qadam-baqadam.</p>
+<div class="cta"><a class="btn tg" href="#">Yopiq kanalga kirish</a><a class="btn alt" href="#yoq">Yo'l xaritasini ko'rish</a></div>
+<div class="stats"><div><b>13</b>dasturlash tili</div><div><b>200+</b>video dars</div><div><b>30+</b>amaliy loyiha</div></div>
+</div>
+<div class="term" aria-label="Kod namunasi">
+<div class="tabs" role="tablist" id="tabs"></div>
+<pre id="code"></pre>
+<div class="out"><span id="res">▸ Natijani ko'rish uchun "Ishga tushirish"ni bosing</span><button id="run">Ishga tushirish</button></div>
+</div>
+</div>
+
+<section id="tillar"><div class="wrap">
+<div class="head"><h2>Qaysi tilni o'rganmoqchisiz?</h2><p>Har bir til alohida kurs: o'rnatishdan boshlab to loyihagacha. Maqsadingizga qarab tanlang.</p></div>
+<div class="filters" id="filters"></div>
+<div class="grid" id="langs"></div>
+</div></section>
+
+<section id="yoq" class="band"><div class="wrap">
+<div class="head"><h2>Noldan mutaxassisgacha yo'l</h2><p>Tartib muhim. Har bosqichni tugatib, keyingisiga o'ting.</p></div>
+<div class="path">
+<div class="step"><div><h3>Asoslar va kompyuter savodxonligi</h3><p>Dasturchi kabi o'ylashni o'rganamiz.</p><ul><li>Algoritm, mantiq va blok-sxemalar</li><li>Terminal, fayllar, kod muharriri (VS Code) o'rnatish</li><li>Ingliz tilidagi asosiy texnik so'zlar</li></ul></div></div>
+<div class="step"><div><h3>Birinchi til: Python</h3><p>Eng yumshoq kirish. 4 haftada birinchi dasturlaringiz tayyor.</p><ul><li>O'zgaruvchilar, shartlar, sikllar, funksiyalar</li><li>Ro'yxat, lug'at, fayllar bilan ishlash</li><li>Loyiha: kalkulyator, topishmoq o'yini, Telegram bot</li></ul></div></div>
+<div class="step"><div><h3>Veb: HTML, CSS, JavaScript</h3><p>Ko'z oldingizda ishlaydigan saytlar yasaymiz.</p><ul><li>Semantik HTML, Flexbox, Grid, moslashuvchan dizayn</li><li>DOM, hodisalar, fetch va API</li><li>Loyiha: portfolio sayt, vazifalar ro'yxati, ob-havo ilovasi</li></ul></div></div>
+<div class="step"><div><h3>Git, GitHub va jamoada ishlash</h3><p>Kodingizni saqlang, ulashing, ishga joylashing.</p><ul><li>commit, branch, pull request, merge</li><li>GitHub Pages orqali saytni bepul joylash</li><li>Profilingizni ish beruvchi uchun tayyorlash</li></ul></div></div>
+<div class="step"><div><h3>Yo'nalish tanlash</h3><p>Backend, frontend, mobil yoki ma'lumotlar tahlili.</p><ul><li>Node.js / Django / Spring / ASP.NET</li><li>SQL, PostgreSQL, REST API, autentifikatsiya</li><li>Docker, testlash, deploy</li></ul></div></div>
+<div class="step"><div><h3>Katta loyiha va ish qidirish</h3><p>Real mahsulot yasab, rezyume va suhbatga tayyorlanamiz.</p><ul><li>To'liq stek loyiha (e-commerce yoki CRM)</li><li>Algoritmik masalalar va suhbat mashqlari</li><li>Frilans va masofaviy ish platformalari</li></ul></div></div>
+</div>
+</div></section>
+
+<section id="dars"><div class="wrap lesson">
+<div>
+<div class="head" style="margin-bottom:0"><h2>Namuna dars: o'zgaruvchilar</h2></div>
+<p>O'zgaruvchi — bu qiymat saqlanadigan nomli quti. Python'da qutini oldindan e'lon qilish shart emas: nom berasiz, qiymat yozasiz, tamom.</p>
+<p>Matn qo'shtirnoq ichida yoziladi, son esa oddiy. Dastur turini o'zi aniqlaydi. <code>print()</code> natijani ekranga chiqaradi.</p>
+<div class="task"><b>Topshiriq:</b> o'zingiz haqingizda <code>ism</code>, <code>yosh</code>, <code>shahar</code> o'zgaruvchilarini yarating va ularni bitta jumlada chop eting.</div>
+</div>
+<div class="term"><pre>ism = "Aziza"
+yosh = 19
+shahar = "Toshkent"
+
+print("Salom,", ism)
+print("Siz", yosh, "yoshdasiz")
+print(f"{ism} {shahar}da yashaydi")
+
+# 5 yildan keyin
+print("5 yildan so'ng:", yosh + 5)</pre></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+<div class="head"><h2>Bu yerda nimalar bor</h2></div>
+<div class="cols">
+<div class="feat"><h3>O'zbek tilida tushuntirish</h3><p>Murakkab tushunchalar sodda misollar bilan, ingliz atamalari izohi bilan.</p></div>
+<div class="feat"><h3>Har darsda topshiriq</h3><p>Ko'rib emas, yozib o'rganasiz. Har mavzu mashq bilan mustahkamlanadi.</p></div>
+<div class="feat"><h3>Real loyihalar</h3><p>Portfolio uchun GitHub'ga joylanadigan o'nlab tayyor ishlar.</p></div>
+<div class="feat"><h3>Savol-javob guruhi</h3><p>Tushunmagan joyingizni yozasiz, mentor va guruhdoshlar yordam beradi.</p></div>
+</div></div></section>
+
+<section><div class="wrap"><div class="join">
+<div><h2>To'liq darslar yopiq Telegram kanalda</h2><p>Saytda tanishuv qismi ochiq. Barcha video darslar, kod fayllari va yangilanishlar kanalda joylanadi.</p><a class="btn sun tg" href="#">Kanalga qo'shilish</a></div>
+<ul><li>Barcha tillar bo'yicha to'liq darslar</li><li>Tayyor loyiha kodlari</li><li>Yangi darslar haftalik qo'shiladi</li><li>Mentor bilan savol-javob</li></ul>
+</div></div></section>
+
+<section id="savol"><div class="wrap">
+<div class="head"><h2>Ko'p so'raladigan savollar</h2></div>
+<details><summary>Hech qanday tajribam yo'q. Boshlay olamanmi?</summary><p>Ha. Kurs birinchi darsdan boshlanadi: kompyuter sozlash, birinchi dastur. Oldindan bilim talab qilinmaydi.</p></details>
+<details><summary>Qaysi tildan boshlash kerak?</summary><p>Ko'pchilikka Python tavsiya etiladi. Sayt yasamoqchi bo'lsangiz HTML, CSS va JavaScript'dan boshlang.</p></details>
+<details><summary>Qancha vaqtda ish topsa bo'ladi?</summary><p>Kuniga 2–3 soat mashq bilan odatda 8–12 oy. Asosiysi muntazamlik va o'z loyihalaringiz.</p></details>
+<details><summary>Darslarga qanday kiraman?</summary><p>"Kanalga qo'shilish" tugmasini bosing — Telegram yopiq kanaliga o'tasiz.</p></details>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 KodYo'l. Barcha huquqlar himoyalangan.</span><span>Dasturlashni hamma uchun ochiq qilamiz.</span></div></footer>
+
+<script>
+// Telegram yopiq kanal linkini shu yerga qo'ying:
+var TG_LINK="https://t.me/+SIZNING_LINKINGIZ";
+document.querySelectorAll("a.tg").forEach(function(a){a.href=TG_LINK;a.target="_blank";a.rel="noopener"});
+
+var S={
+"Python":['print("Salom, dunyo!")\n\nfor i in range(3):\n    print("Qadam", i + 1)','Salom, dunyo!  Qadam 1  Qadam 2  Qadam 3'],
+"JavaScript":['console.log("Salom, dunyo!");\n\nconst sonlar = [1, 2, 3];\nconsole.log(sonlar.map(n => n * 2));','Salom, dunyo!  [2, 4, 6]'],
+"Java":['public class Main {\n  public static void main(String[] a) {\n    System.out.println("Salom, dunyo!");\n  }\n}','Salom, dunyo!'],
+"C++":['#include <iostream>\nint main() {\n  std::cout << "Salom, dunyo!";\n  return 0;\n}','Salom, dunyo!'],
+"C#":['Console.WriteLine("Salom, dunyo!");\nvar yosh = 20;\nConsole.WriteLine(yosh + 1);','Salom, dunyo!  21'],
+"Go":['package main\nimport "fmt"\n\nfunc main() {\n  fmt.Println("Salom, dunyo!")\n}','Salom, dunyo!'],
+"Rust":['fn main() {\n    let nom = "dunyo";\n    println!("Salom, {}!", nom);\n}','Salom, dunyo!'],
+"PHP":['<?php\n$ism = "Aziza";\necho "Salom, $ism!";','Salom, Aziza!'],
+"SQL":["SELECT ism, yosh\nFROM talabalar\nWHERE yosh > 18\nORDER BY yosh DESC;",'2 qator qaytdi: Aziza (19), Jasur (21)']
+};
+var tabs=document.getElementById("tabs"),code=document.getElementById("code"),res=document.getElementById("res"),cur="Python";
+function show(k){cur=k;code.textContent=S[k][0];res.textContent='▸ Natijani ko\'rish uchun "Ishga tushirish"ni bosing';
+tabs.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-selected",b.textContent===k)})}
+Object.keys(S).forEach(function(k){var b=document.createElement("button");b.textContent=k;b.setAttribute("role","tab");b.onclick=function(){show(k)};tabs.appendChild(b)});
+document.getElementById("run").onclick=function(){res.textContent="▸ "+S[cur][1]};
+show("Python");
+
+var L=[
+["Python","py","Veb, sun'iy intellekt, avtomatlashtirish, ma'lumotlar tahlili.","Boshlovchi uchun eng yaxshi","Boshlang'ich"],
+["JavaScript","js","Brauzer va serverda ishlaydi. Interaktiv saytlar va ilovalar.","Veb dasturlash asosi","Veb"],
+["HTML & CSS","html","Sayt skeleti va dizayni. Har bir veb dasturchi bilishi shart.","Veb dasturlash asosi","Veb"],
+["TypeScript","ts","JavaScript'ga turlar qo'shadi. Katta loyihalarda xatolar kamayadi.","O'rta daraja","Veb"],
+["PHP","php","Veb-serverlar, WordPress va ko'plab mahalliy loyihalar tili.","Backend","Veb"],
+["Java","java","Banklar, Android va yirik korporativ tizimlar.","O'rta daraja","Mobil"],
+["Kotlin","kt","Android ilovalar uchun zamonaviy va qisqa til.","O'rta daraja","Mobil"],
+["Swift","swift","iPhone va Mac ilovalari uchun Apple tili.","O'rta daraja","Mobil"],
+["C++","cpp","Tezlik talab qilinadigan o'yinlar va tizim dasturlari.","Murakkab","Tizim"],
+["C#","cs","O'yinlar (Unity), desktop va .NET backend.","O'rta daraja","Tizim"],
+["Go","go","Tezkor va sodda server tillari. Bulutli xizmatlar.","O'rta daraja","Tizim"],
+["Rust","rs","Xavfsiz va juda tez tizim dasturlash tili.","Murakkab","Tizim"],
+["SQL","sql","Ma'lumotlar bazasi bilan ishlash. Barcha yo'nalishlarda kerak.","Boshlang'ich","Ma'lumot"]];
+var cats=["Hammasi","Boshlang'ich","Veb","Mobil","Tizim","Ma'lumot"],F=document.getElementById("filters"),G=document.getElementById("langs"),sel="Hammasi";
+function draw(){G.innerHTML="";L.filter(function(l){return sel==="Hammasi"||l[4]===sel||(sel==="Boshlang'ich"&&l[3]==="Boshlovchi uchun eng yaxshi")}).forEach(function(l){
+var d=document.createElement("div");d.className="lang";d.innerHTML='<span class="tag">.'+l[1]+'</span><h3>'+l[0]+'</h3><p>'+l[2]+'</p><small>'+l[3]+'</small>';G.appendChild(d)});
+F.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-pressed",b.textContent===sel)})}
+cats.forEach(function(c){var b=document.createElement("button");b.textContent=c;b.onclick=function(){sel=c;draw()};F.appendChild(b)});
+draw();
+
+var root=document.documentElement;
+try{var t=localStorage.getItem("theme");if(t)root.setAttribute("data-theme",t)}catch(e){}
+document.getElementById("theme").onclick=function(){
+var dark=root.getAttribute("data-theme")?root.getAttribute("data-theme")==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+var n=dark?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("theme",n)}catch(e){}};
+</script>
+</body>
+</html>
